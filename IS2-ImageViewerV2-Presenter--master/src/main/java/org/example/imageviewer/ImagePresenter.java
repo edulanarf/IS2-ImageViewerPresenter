@@ -42,6 +42,7 @@ public class ImagePresenter {
 
     private void repaint() {
         this.display.clear();
+        this.bitmap = load(image.id());
         this.display.paint(image.id(), 0,bitmap);
 
     }

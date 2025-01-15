@@ -81,12 +81,25 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     public void paint(Graphics g) {
         for(BufferedPaints images: bufferedPaints){
             g.fillRect(images.offset, 0, this.getWidth(), this.getHeight());
-            int x = images.offset + (this.getWidth() - images.bitmap.getWidth()) / 2;
-            int y = (this.getHeight() - images.bitmap.getHeight()) / 2;
-            g.drawImage(images.bitmap, x, y, null);
+            BufferedImage image = resizeImage(images.bitmap, 800, 600);
+
+            int x = images.offset + (this.getWidth() - image.getWidth()) / 2;
+            int y = (image.getHeight() - image.getHeight()) / 2;
+            g.drawImage(image, x, y, null);
 
         }
     }
+
+    BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = resizedImage.createGraphics();
+        graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        graphics2D.dispose();
+        return resizedImage;
+    }
+
+
+
 
 
 

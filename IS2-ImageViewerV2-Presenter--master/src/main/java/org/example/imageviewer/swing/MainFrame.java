@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame()  {
         this.setTitle("Image Viewer");
-        this.setSize(800,600);
+        this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.add(createImageDisplay());
