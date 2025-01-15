@@ -16,6 +16,6 @@ public class Main {
     }
 
     private static Image image() {
-        return new FolderImageLoader(new File("images")).load();
+        return new FolderImageLoader(new File("IS2-ImageViewerV2-Presenter--master/src/main/java/images")).load();
     }
 }

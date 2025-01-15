@@ -10,6 +10,7 @@ public class FolderImageLoader implements ImageLoader {
 
     private final File[] ids;
 
+
     public FolderImageLoader(File folder) {
         this.ids = folder.listFiles(isImage());
     }

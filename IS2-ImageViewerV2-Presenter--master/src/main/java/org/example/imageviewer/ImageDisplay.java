@@ -1,9 +1,12 @@
 package org.example.imageviewer;
 
+import java.awt.image.BufferedImage;
+
 public interface ImageDisplay {
-    void paint(String id, int offset);
+    void paint(String id, int offset, BufferedImage image);
 
     int getWidth();
+
 
     void clear();
 

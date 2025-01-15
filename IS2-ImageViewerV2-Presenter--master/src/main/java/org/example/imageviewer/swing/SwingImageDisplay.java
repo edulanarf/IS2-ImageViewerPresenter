@@ -1,12 +1,17 @@
 package org.example.imageviewer.swing;
 
+import org.example.imageviewer.Image;
 import org.example.imageviewer.ImageDisplay;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +21,8 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     private Released released = Released.Null;
     private int initShift;
     private List<Paint> paints = new ArrayList<>();
+    private List<BufferedPaints> bufferedPaints = new ArrayList<>();
+    private BufferedImage bitmap;
 
     public SwingImageDisplay() {
         this.addMouseListener(mouseListener());
@@ -58,28 +65,30 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     }
 
     @Override
-    public void paint(String id, int offset) {
-        paints.add(new Paint(id, offset));
+    public void paint(String id, int offset, BufferedImage bitmap) {
+        bufferedPaints.add(new BufferedPaints(bitmap, offset, id));
         repaint();
     }
+
 
     @Override
     public void clear() {
         paints.clear();
     }
 
-    private static final Map<String,Color> colors = Map.of(
-            "red", Color.RED,
-            "green", Color.GREEN,
-            "blue", Color.BLUE
-    );
+
     @Override
     public void paint(Graphics g) {
-        for (Paint paint : paints) {
-            g.setColor(colors.get(paint.id));
-            g.fillRect(paint.offset, 0, 800, 600);
+        for(BufferedPaints images: bufferedPaints){
+            g.fillRect(images.offset, 0, this.getWidth(), this.getHeight());
+            int x = images.offset + (this.getWidth() - images.bitmap.getWidth()) / 2;
+            int y = (this.getHeight() - images.bitmap.getHeight()) / 2;
+            g.drawImage(images.bitmap, x, y, null);
+
         }
     }
+
+
 
     @Override
     public void on(Shift shift) {
@@ -93,4 +102,10 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
 
     private record Paint(String id, int offset) {
     }
+
+    private record BufferedPaints(BufferedImage bitmap, int offset, String id){
+
+    }
+
+
 }
