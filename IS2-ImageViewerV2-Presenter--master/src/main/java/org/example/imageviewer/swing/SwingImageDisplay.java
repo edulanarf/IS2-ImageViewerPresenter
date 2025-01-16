@@ -20,9 +20,7 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     private Shift shift = Shift.Null;
     private Released released = Released.Null;
     private int initShift;
-    private List<Paint> paints = new ArrayList<>();
-    private List<BufferedPaints> bufferedPaints = new ArrayList<>();
-    private BufferedImage bitmap;
+    private final List<BufferedPaints> bufferedPaints = new ArrayList<>();
 
     public SwingImageDisplay() {
         this.addMouseListener(mouseListener());
@@ -73,7 +71,7 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
 
     @Override
     public void clear() {
-        paints.clear();
+        bufferedPaints.clear();
     }
 
 
@@ -82,7 +80,6 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
         for(BufferedPaints images: bufferedPaints){
             g.fillRect(images.offset, 0, this.getWidth(), this.getHeight());
             BufferedImage image = resizeImage(images.bitmap, 800, 600);
-
             int x = images.offset + (this.getWidth() - image.getWidth()) / 2;
             int y = (image.getHeight() - image.getHeight()) / 2;
             g.drawImage(image, x, y, null);
@@ -111,9 +108,6 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
     @Override
     public void on(Released released) {
         this.released = released != null ? released : Released.Null;
-    }
-
-    private record Paint(String id, int offset) {
     }
 
     private record BufferedPaints(BufferedImage bitmap, int offset, String id){

@@ -21,10 +21,10 @@ public class ImagePresenter {
         display.clear();
         display.paint(image.id(), offset, bitmap);
         if (offset > 0) {
-            display.paint(image.prev().id(), offset - display.getWidth(), bitmap);
+            display.paint(image.prev().id(), offset - display.getWidth(), load(image.prev().id()));
         }
         else {
-            display.paint(image.next().id(), display.getWidth() + offset, bitmap);
+            display.paint(image.next().id(), display.getWidth() + offset, load(image.next().id()));
         }
     }
 
@@ -36,7 +36,6 @@ public class ImagePresenter {
 
     public void show(Image image) {
         this.image = image;
-        this.bitmap = load(image.id());
         repaint();
     }
 
@@ -44,6 +43,8 @@ public class ImagePresenter {
         this.display.clear();
         this.bitmap = load(image.id());
         this.display.paint(image.id(), 0,bitmap);
+
+
 
     }
 
